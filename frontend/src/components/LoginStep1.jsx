@@ -10,6 +10,8 @@ import logo from "../assets/image.png";
 function LoginStep1() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
+  const [activeSection, setActiveSection] = useState("PHONE");
+  const [mobileNumber, setMobileNumber] = useState('');
   const [showOTPInput, setShowOTPInput] = useState(false);
   const hasNavigated = useRef(false);
   const { setMobileNumber: setGlobalMobileNumber } = useContext(Context);
@@ -47,6 +49,11 @@ function LoginStep1() {
 
     localStorage.setItem("otplessUser", JSON.stringify(otplessUser));
   };
+  const switchActiveSection = (e) => {
+    setActiveSection(e.target.value);
+    setPhone("");
+    setEmail("");
+  };
 
   const handleProceed = () => {
     Authenticate({ channel: "PHONE", phone })
@@ -62,7 +69,7 @@ function LoginStep1() {
   };
 
   const handleVerifyOTP = () => {
-    verifyOTP({ channel: "PHONE", otp, phone })
+    verifyOTP({ channel: "PHONE", activeSection, otp, phone })
       .then((res) => {
         if (res.success) {
           toast.success("OTP verified successfully!");
@@ -90,9 +97,10 @@ function LoginStep1() {
 
       <div className="flex flex-col items-center justify-center w-full space-y-6 mt-4">
         {/* Mobile Number Input */}
-        {!showOTPInput && (
-          <div className="w-full">
+        {!showOTPInput && activeSection === "PHONE" && (
+          <div id="mobile-section" className="w-full">
             <input
+            id="mobile-input"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 shadow-sm"
               placeholder="Enter mobile number"
               value={phone}
@@ -109,9 +117,10 @@ function LoginStep1() {
 
         {/* OTP Input */}
         {showOTPInput && (
-          <div className="w-full">
+          <div id="otp-section" className="w-full">
             <input
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 shadow-sm"
+              id="otp-input"
               placeholder="Enter OTP"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}

@@ -10,12 +10,12 @@ import crypto from 'crypto';
 
 const app = express();
 
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const buildPath = path.join(__dirname, '../frontend/dist');
-app.use(express.static(buildPath));
+// import { fileURLToPath } from 'url';
+// import { dirname } from 'path';
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
+// const buildPath = path.join(__dirname, '../frontend/dist');
+// app.use(express.static(buildPath));
 
 app.use(bodyParser.json());
 app.use(cors({origin: ['']}));
@@ -27,8 +27,10 @@ app.use(express.json({ extended: false }));
 
 // Define Routes
 app.use('/api/auth', authRoutes);
-app.get('*', (req, res) => { res.sendFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html')); });
-
+// app.get('*', (req, res) => { res.sendFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html')); });
+app.get('/',(req,res)=>{
+    res.send('Hello Backend is running')
+})
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

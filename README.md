@@ -13,7 +13,7 @@
     ```sh
     cd frontend
     npm run build
-    npm start
+    npm run dev
     ```
 
 
