@@ -322,7 +322,7 @@ function SignupStep1() {
         <button
           onClick={() => {
             navigate("/");
-            window.location.reload();
+            location.reload(true);
           }}
           className="w-full py-3 bg-gray-200 text-gray-700 rounded-lg mt-3 hover:bg-gray-300 transition duration-200 font-semibold shadow-md"
         >
